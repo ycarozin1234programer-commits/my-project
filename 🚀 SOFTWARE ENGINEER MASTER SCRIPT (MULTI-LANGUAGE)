@@ -1,0 +1,88 @@
+=== NODE.JS (EXPRESS API) ===
+const express = require('express');
+const app = express();
+app.use(express.json());
+
+let users = [];
+
+app.post('/users', (req, res) => {
+    const user = { id: users.length + 1, name: req.body.name };
+    users.push(user);
+    res.status(201).json(user);
+});
+
+app.get('/users', (req, res) => res.json(users));
+
+app.listen(3000, () => console.log('Node API 🚀'));
+
+
+=== JAVA SPRING BOOT ===
+@SpringBootApplication
+@RestController
+class Application {
+    List<User> users = new ArrayList<>();
+
+    @GetMapping("/")
+    public String home() { return "API Running 🚀"; }
+
+    @PostMapping("/users")
+    public User create(@RequestBody User u) {
+        u.setId(users.size()+1);
+        users.add(u);
+        return u;
+    }
+
+    @GetMapping("/users")
+    public List<User> list() { return users; }
+}
+
+class User {
+    private int id;
+    private String name;
+}
+
+
+=== PYTHON FLASK ===
+from flask import Flask, request, jsonify
+app = Flask(__name__)
+users = []
+
+@app.route('/users', methods=['POST'])
+def create():
+    data = request.json
+    user = {"id": len(users)+1, "name": data["name"]}
+    users.append(user)
+    return jsonify(user)
+
+@app.route('/users')
+def list_users():
+    return jsonify(users)
+
+app.run()
+
+
+=== C# ASP.NET ===
+var app = WebApplication.Create();
+var users = new List<object>();
+
+app.MapPost("/users", () => {
+    var user = new { Id = users.Count+1 };
+    users.Add(user);
+    return user;
+});
+
+app.MapGet("/users", () => users);
+app.Run();
+
+
+=== C++ CONSOLE ===
+vector<User> users;
+User u;
+u.name = "test";
+u.age = 18;
+users.push_back(u);
+
+
+=== JAVA CONSOLE ===
+ArrayList<User> users = new ArrayList<>();
+users.add(new User("test", 18));
